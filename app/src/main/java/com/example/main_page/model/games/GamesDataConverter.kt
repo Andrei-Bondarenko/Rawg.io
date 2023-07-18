@@ -5,6 +5,7 @@ import com.example.main_page.api.model.games.GamesResultsResponse
 import com.example.main_page.api.model.games.GenresResponse
 import com.example.main_page.api.model.games.PlatformResponse
 import com.example.main_page.api.model.games.PlatformsResponse
+import com.example.main_page.api.model.games.ShortScreenshotsResponse
 
 object GamesDataConverter {
 
@@ -23,7 +24,15 @@ object GamesDataConverter {
                 ratings_count = data.ratings_count,
                 updated = data.updated,
                 platforms = fromNetworkPlatform(data.platforms),
-                genres = fromNetworkGenres(data.genres)
+                genres = fromNetworkGenres(data.genres),
+                screenshots = fromNetworkScreenshots(data.short_screenshots)
+            )
+        }
+
+    private fun fromNetworkScreenshots(response: List<ShortScreenshotsResponse>) =
+        response.map { data ->
+            Screenshots(
+                image = data.image
             )
         }
 

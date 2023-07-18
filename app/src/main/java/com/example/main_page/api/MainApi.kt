@@ -15,6 +15,7 @@ interface MainApi {
     @GET("api/games")
     suspend fun getGamesData(
         @Query("genres") genre: String,
+//        @Query("page") page: Int,
         @Query("key") key: String = "d2181ae3f27447199a3777f76003c0cd"
     ): GamesDataResponse
 }

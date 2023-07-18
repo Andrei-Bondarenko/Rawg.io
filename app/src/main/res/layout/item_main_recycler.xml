@@ -30,7 +30,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/linearLayout_background"
-
         android:padding="10dp"
         android:scrollbars="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,8 +38,8 @@
         app:layout_constraintTop_toBottomOf="@id/linearLayout"
         tools:itemCount="3"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_horizontal_recycler"
-        tools:orientation="horizontal" />
+        tools:orientation="horizontal"
+        tools:listitem="@layout/item_horizontal_recycler"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

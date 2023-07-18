@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Rawg.io</string>
     <string name="key">d2181ae3f27447199a3777f76003c0cd</string>
+    <string name="last_update">Last Update: </string>
+    <string name="released_at">Released at: </string>
+    <string name="rating">Rating: </string>
+    <string name="gaming_platforms">Gaming Platforms: </string>
+    <string name="game_genres">Game genres: </string>
 </resources>

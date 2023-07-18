@@ -7,7 +7,7 @@ object DataConverter {
 
     fun fromNetwork(response: List<ResultsResponse>) =
         response.map { data ->
-            Results(
+            GenresData(
                 id = data.id,
                 name = data.name,
                 slug = data.slug,

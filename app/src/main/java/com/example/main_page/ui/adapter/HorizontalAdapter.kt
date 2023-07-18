@@ -9,20 +9,21 @@ import com.example.main_page.model.genres.Games
 import com.example.rawgio.R
 
 class HorizontalAdapter(
-    private val gamesData: GamesData
+    private val gamesData: List<GamesResults>,
+    private val clickOnItem: (GamesResults) -> Unit
 ): RecyclerView.Adapter<HorizontalViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HorizontalViewHolder {
         LayoutInflater.from(parent.context).inflate(R.layout.item_horizontal_recycler, parent, false)
-        return HorizontalViewHolder(parent)
+        return HorizontalViewHolder(parent, clickOnItem)
     }
 
     override fun onBindViewHolder(holder: HorizontalViewHolder, position: Int) {
-        holder.onBind(gamesData.results[position])
+        holder.onBind(gamesData[position])
     }
 
-    override fun getItemCount() = gamesData.results.size
+    override fun getItemCount() = gamesData.size
 
 
 }

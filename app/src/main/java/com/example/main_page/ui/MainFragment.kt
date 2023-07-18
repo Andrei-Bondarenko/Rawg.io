@@ -1,6 +1,5 @@
 package com.example.main_page.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +7,11 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.mvvm.BaseFragment
-import com.example.main_page.model.games.GamesResults
-import com.example.main_page.model.genres.Results
+import com.example.detailed_page.DetailedFragment
 import com.example.main_page.ui.adapter.MainAdapter
 import com.example.rawgio.R
 import com.example.rawgio.databinding.FragmentMainBinding
+import com.example.utils.extentions.replaceScreen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -20,9 +19,15 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     private lateinit var binding: FragmentMainBinding
     private val viewModel: MainViewModel by viewModel()
-    private val adapter: MainAdapter by lazy {
-        MainAdapter(context = requireContext())
-    }
+    private val adapter: MainAdapter =
+        MainAdapter(getGames = { slug ->
+            Timber.d("CALLED FUNCTION GETGAMESDATA WITH SLUG ==== $slug")
+            viewModel.getGamesData(slug)
+        },
+            clickOnItem = { data ->
+                replaceScreen(DetailedFragment.newInstance(itemData = data))
+            }
+        )
 
     private val layoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(context)
@@ -48,13 +53,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     override fun bind() {
         with(viewModel) {
-            val list = dataFlow.value
-            if (list.isNotEmpty()) {
-                for (i in 0..list.size) {
-                    Timber.d("BEGINNING $i CYCLE FOR")
-                    getData(list[i].slug)
-                }
-            }
             observe(dataFlow) {
                 adapter.setData(it)
             }
@@ -70,6 +68,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     override fun onDestroyView() {
         super.onDestroyView()
         binding.mainRecycler.layoutManager = null
-        activity?.finish()
+
     }
 }

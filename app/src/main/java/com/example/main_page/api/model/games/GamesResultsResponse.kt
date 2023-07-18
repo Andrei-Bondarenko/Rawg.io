@@ -1,5 +1,9 @@
 package com.example.main_page.api.model.games
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class GamesResultsResponse(
     val id: Int,
     val slug: String,
@@ -31,4 +35,4 @@ data class GamesResultsResponse(
     val esrb_rating: EsrbRatingResponse,
     val short_screenshots: List<ShortScreenshotsResponse>,
 
-)
+) : Parcelable
