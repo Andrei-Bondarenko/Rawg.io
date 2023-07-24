@@ -51,7 +51,7 @@ class DetailedFragment : BaseFragment(R.layout.fragment_detail_games) {
             releasedAtTextView.text = itemData.released
             lastUpdateTextView.text = itemData.updated.substring(0, 10)
             ratingBar.rating = itemData.rating.toFloat()
-//            gamingPlatformsTextView.text = setPlatforms(itemData.platforms)
+            gamingPlatformsTextView.text = setPlatforms(itemData.platforms)
             setPlatforms(itemData.platforms)
             toolBarName.text = itemData.name
             adapter.setData(itemData.screenshots)
@@ -65,16 +65,14 @@ class DetailedFragment : BaseFragment(R.layout.fragment_detail_games) {
     override fun bind() {
     }
 
-    private fun setPlatforms(platforms: List<Platforms>) {
+    private fun setPlatforms(platforms: List<Platforms>): String {
         var platformsString = ""
         for (i in platforms.indices) {
             if (i != platforms.size - 1) {
-//                if (i % 2 != 0) platformsString = platformsString + platforms[i].name + ",\n"
             platformsString = platformsString + platforms[i].name + ", "
-//                else platformsString = platformsString + platforms[i].name + ", "
             } else platformsString += platforms[i].name
         }
-        binding.gamingPlatformsTextView.text = platformsString
+        return platformsString
     }
 
 }

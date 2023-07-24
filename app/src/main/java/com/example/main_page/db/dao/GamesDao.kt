@@ -2,18 +2,18 @@ package com.example.main_page.db.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
+import com.example.main_page.db.model.GamesEntity
 
-//@Dao
-//interface GamesDao {
-//
-//    @Upsert
-//    suspend fun upsertAll(games: List<GamesEntity>?)
-//
-//    @Query("SELECT * FROM games")
-//    fun pagingSource(): PagingSource<Int, GamesEntity>
-//
-//    @Query("DELETE FROM games")
-//    suspend fun clearAll()
-//}
+@Dao
+interface GamesDao {
+    @Query("SELECT * FROM games WHERE slug LIKE :genre LIMIT :limit OFFSET :offset")
+    fun getGames(genre: String, limit: Int, offset: Int): List<GamesEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun setGames(genres: List<GamesEntity>)
+
+}

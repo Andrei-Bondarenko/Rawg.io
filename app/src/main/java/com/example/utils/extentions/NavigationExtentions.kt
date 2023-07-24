@@ -37,6 +37,15 @@ fun FragmentActivity.popFeature() {
     }
 }
 
+fun Fragment.hideAndAddFragment(addFragment: Fragment, id: Int) {
+    val fragmentManager = parentFragmentManager
+    val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+    fragmentTransaction.addToBackStack(null)
+        .hide(this)
+        .add(id, addFragment)
+        .commit()
+}
+
 fun Fragment.replaceScreen(
     fragment: Fragment,
     popCurrent: Boolean = false,

@@ -3,23 +3,19 @@ package com.example.main_page.model.games
 import com.example.main_page.api.model.games.GamesDataResponse
 import com.example.main_page.api.model.games.GamesResultsResponse
 import com.example.main_page.api.model.games.GenresResponse
-import com.example.main_page.api.model.games.PlatformResponse
 import com.example.main_page.api.model.games.PlatformsResponse
 import com.example.main_page.api.model.games.ShortScreenshotsResponse
 
 object GamesDataConverter {
 
-    fun fromNetwork(response: GamesDataResponse) =
-        GamesData(
-            results = fromNetworkResults(response.results)
-        )
-
-    private fun fromNetworkResults(response: List<GamesResultsResponse>) =
+     fun fromNetwork(response: List<GamesResultsResponse>, genres: String) =
         response.map { data ->
             GamesResults(
+                id = data.id,
                 name = data.name,
+                slug = genres,
                 released = data.released,
-                backround_image = data.background_image,
+                background_image = data.background_image,
                 rating = data.rating,
                 ratings_count = data.ratings_count,
                 updated = data.updated,

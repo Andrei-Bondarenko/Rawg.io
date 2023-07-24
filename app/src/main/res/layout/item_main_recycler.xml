@@ -6,25 +6,6 @@
     android:layout_height="wrap_content"
     android:background="@color/background_color">
 
-
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/genresTextView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Genres"
-            android:textColor="@color/white"
-            android:textSize="40sp" />
-    </LinearLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemRecycler"
         android:layout_width="match_parent"
@@ -32,14 +13,14 @@
         android:background="@color/linearLayout_background"
         android:padding="10dp"
         android:scrollbars="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="3"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:orientation="horizontal"
-        tools:listitem="@layout/item_horizontal_recycler"/>
+        tools:listitem="@layout/item_horizontal_recycler"
+        android:orientation="horizontal" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

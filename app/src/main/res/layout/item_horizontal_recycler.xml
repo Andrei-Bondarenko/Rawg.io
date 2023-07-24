@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:background="@color/item_background">
@@ -54,6 +54,13 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             tools:src="@tools:sample/backgrounds/scenic" />
+
+        <ImageView
+            android:id="@+id/image9"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -91,6 +98,13 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             tools:src="@tools:sample/backgrounds/scenic" />
+
+        <ImageView
+            android:id="@+id/image10"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
     </LinearLayout>
 
 

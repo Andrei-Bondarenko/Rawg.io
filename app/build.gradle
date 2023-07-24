@@ -100,4 +100,10 @@ dependencies {
 
     //Paging
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
+
+    //Easy Adapter
+    implementation "ru.surfstudio.android:easyadapter:7.0.1"
+    implementation "ru.surfstudio.android:easyadapter-pagination:7.0.1"
+    implementation 'ru.surfstudio.android:datalist-page-count:0.5.0'
+    implementation 'ru.surfstudio.android:datalist-base:0.5.0'
 }
