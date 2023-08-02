@@ -6,4 +6,6 @@
     <string name="rating">Rating: </string>
     <string name="gaming_platforms">Gaming Platforms: </string>
     <string name="game_genres">Game genres: </string>
+    <string name="try_again">Try Again</string>
+    <string name="world_of_tanks_forever">World Of Tanks Forever</string>
 </resources>

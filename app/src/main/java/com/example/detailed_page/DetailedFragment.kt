@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
 import com.example.common.mvvm.BaseFragment
 import com.example.detailed_page.detailed_adapter.Adapter
 import com.example.main_page.model.games.GamesResults
@@ -30,7 +31,7 @@ class DetailedFragment : BaseFragment(R.layout.fragment_detail_games) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDetailGamesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -51,6 +52,7 @@ class DetailedFragment : BaseFragment(R.layout.fragment_detail_games) {
             releasedAtTextView.text = itemData.released
             lastUpdateTextView.text = itemData.updated.substring(0, 10)
             ratingBar.rating = itemData.rating.toFloat()
+            imageView.load(itemData.background_image)
             gamingPlatformsTextView.text = setPlatforms(itemData.platforms)
             setPlatforms(itemData.platforms)
             toolBarName.text = itemData.name

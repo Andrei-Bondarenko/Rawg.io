@@ -4,7 +4,6 @@ import com.example.common.mvvm.BaseViewModel
 import com.example.main_page.interactor.MainInteractor
 import com.example.main_page.model.games.GamesResults
 import com.example.main_page.model.genres.GenresData
-import com.example.main_page.ui.model.GamesUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -18,16 +17,9 @@ class MainViewModel(
 ) : BaseViewModel() {
 
     private val _genresData = MutableStateFlow<List<GenresData>>(emptyList())
-    val dataFlow = _genresData.asStateFlow()
-
-    private val _gamesData = MutableStateFlow<GamesUi>(GamesUi())
-    val gamesData = _gamesData.asStateFlow()
 
     private val _mainUi = MutableStateFlow<List<MainUi>>(emptyList())
     val mainUi = _mainUi.asStateFlow()
-
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
 
     init {
         loadGenres()
@@ -41,7 +33,6 @@ class MainViewModel(
         launch {
             try {
                 Timber.d("CALLED FUNCTION GETDATA IN VIEWMODEL")
-                _isLoading.value = true
                 val data = interactor.getGenres()
                 _genresData.emit(data)
                 _mainUi.emit(addGenres(data))
@@ -50,16 +41,23 @@ class MainViewModel(
             } catch (t: Throwable) {
                 Timber.e("VIEWMODEL THROWABLE ========= $t")
             } finally {
-                _isLoading.value = false
             }
         }
-
     }
 
     fun loadGames(genre: String, page: Int) {
         launch {
+            val lastMainUi = _mainUi.value.map {
+                when(it) {
+                    is MainUi.GamesList -> {
+                        if(it.genre == genre) it.copy(
+                            paginationState = PaginationState.READY
+                        ) else it
+                    }
+                    is MainUi.Genre -> it
+                }
+            }
             try {
-                _isLoading.value = true
                 val data = interactor.getGamesData(genre, page)
 
                 _mainUi.value = _mainUi.value.addNewGamesByGenre(
@@ -70,9 +68,21 @@ class MainViewModel(
             } catch (e: CancellationException) {
                 Timber.e("VIEWMODEL CANCELATIONEXEPTION ===========", e.message)
             } catch (t: Throwable) {
+                _mainUi.value = lastMainUi
+                _mainUi.value = _mainUi.value.map {
+                    when(it) {
+                        is MainUi.GamesList -> {
+                            if(it.genre == genre) it.copy(
+                                paginationState = PaginationState.ERROR,
+                                lastVisiblePosition = it.lastVisiblePosition + PAGE_SIZE + 1
+                            ) else it
+                        }
+                        is MainUi.Genre -> it
+                    }
+                }
                 Timber.e("VIEWMODEL THROWABLE ========= $t")
-            } finally {
-                _isLoading.value = false
+            }
+            finally {
             }
         }
     }
@@ -91,7 +101,8 @@ class MainViewModel(
                             DataList(games, page, PAGE_SIZE)
                         ),
                         page = page + 1,
-                        lastVisiblePosition = page * PAGE_SIZE - PAGE_SIZE
+                        lastVisiblePosition = page * PAGE_SIZE - PAGE_SIZE,
+                        paginationState = PaginationState.READY
                     )
                 }
 

@@ -5,7 +5,7 @@
     android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@color/item_background">
+    android:background="@drawable/img_background_game_item">
 
     <ImageView
         android:id="@+id/imageView"
@@ -107,27 +107,17 @@
 
     </LinearLayout>
 
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="402dp"
-        android:layout_height="36dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/linearLayout_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
         <TextView
             android:id="@+id/gameName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/linearLayout_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:gravity="center"
-            android:text="World Of Tanks Forever"
+            android:layout_marginBottom="10dp"
+            android:text="@string/world_of_tanks_forever"
             android:textColor="@color/white"
-            android:textSize="25sp" />
-    </LinearLayout>
-
+            android:textSize="20sp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

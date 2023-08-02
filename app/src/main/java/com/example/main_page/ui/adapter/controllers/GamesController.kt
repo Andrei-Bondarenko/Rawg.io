@@ -11,7 +11,6 @@ import ru.surfstudio.android.easyadapter.ItemList
 import ru.surfstudio.android.easyadapter.controller.BindableItemController
 import ru.surfstudio.android.easyadapter.holder.BindableViewHolder
 import ru.surfstudio.android.easyadapter.pagination.EasyPaginationAdapter
-import ru.surfstudio.android.easyadapter.pagination.PaginationState
 import timber.log.Timber
 
 class GamesController(
@@ -39,17 +38,15 @@ class GamesController(
             val layoutManager = binding.itemRecycler.layoutManager as? LinearLayoutManager
                 ?: return@EasyPaginationAdapter
             val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-//            visibleItemPosition = firstVisibleItemPosition
             Timber.d("firstVisible: $firstVisibleItemPosition")
             onLoadGames(data.genre, data.games.nextPage, firstVisibleItemPosition)
         }
-        private val fullGameController = OneGameController(onGameItemClicked)
+        private val oneGameController = OneGameController(onGameItemClicked)
         var visibleItemPosition = 0
 
         init {
             Timber.d("INIT BLOCK AGAIN")
             binding.itemRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
                     visibleItemPosition = layoutManager.findFirstVisibleItemPosition()
@@ -57,24 +54,21 @@ class GamesController(
                 }
             })
             binding.itemRecycler.adapter = adapter
-
         }
 
         override fun bind(data: MainUi.GamesList) {
+            this.data = data
             setAdapterItems(data.games)
             binding.itemRecycler.scrollToPosition(data.lastVisiblePosition)
-            this.data = data
             if (data.page == 1) onLoadGames(data.genre, data.page, 0)
         }
 
         private fun setAdapterItems(games: List<GamesResults>) {
             val itemList = ItemList.create()
             for (game in games) {
-                itemList.add(game, fullGameController)
+                itemList.add(game, oneGameController)
             }
-            adapter.setItems(itemList, PaginationState.READY)
+                adapter.setItems(itemList, data.paginationState)
         }
-
     }
-
 }

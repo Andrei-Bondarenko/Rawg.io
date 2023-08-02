@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.mvvm.BaseFragment
 import com.example.detailed_page.DetailedFragment
@@ -24,10 +23,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     private val viewModel: MainViewModel by viewModel()
     private val easyAdapter = EasyAdapter()
 
-    private val layoutManager: LinearLayoutManager by lazy {
-        LinearLayoutManager(context)
-    }
-
     private val gamesController = GamesController(
         onGameItemClicked = { onGameItemClicked(it) },
         onLoadGames = { genre, page, _ ->
@@ -44,7 +39,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -70,21 +65,15 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 }
                 easyAdapter.setItems(itemList)
             }
-
-            observe(isLoading) { isLoading ->
-                binding.progressBar.isVisible = isLoading
-            }
         }
     }
 
     private fun onGameItemClicked(gameDetails: GamesResults) {
         val fragment = DetailedFragment.newInstance(gameDetails)
-        parentFragmentManager.findFragmentById(R.id.fragmentContainer)?.let {
-            it.hideAndAddFragment(
-                addFragment = fragment,
-                id = R.id.fragmentContainer
-            )
-        }
+        parentFragmentManager.findFragmentById(R.id.fragmentContainer)?.hideAndAddFragment(
+            addFragment = fragment,
+            id = R.id.fragmentContainer
+        )
     }
 
     override fun onDestroyView() {

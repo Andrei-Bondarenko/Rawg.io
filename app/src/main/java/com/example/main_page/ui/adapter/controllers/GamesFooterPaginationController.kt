@@ -30,9 +30,9 @@ class GamesFooterPaginationController :
 
         init {
             with(binding) {
-                tvShowMore.setOnClickListener { listener.onShowMore() }
+                tryAgainBtn.setOnClickListener { listener.onShowMore() }
                 progressBar.visibility = View.GONE
-                tvShowMore.visibility = View.GONE
+                tryAgainBtn.visibility = View.GONE
             }
         }
 
@@ -42,17 +42,17 @@ class GamesFooterPaginationController :
                 when (state) {
                     PaginationState.READY -> {
                         progressBar.visibility = View.VISIBLE
-                        tvShowMore.visibility = View.GONE
+                        tryAgainBtn.visibility = View.GONE
                     }
 
                     PaginationState.COMPLETE -> {
                         progressBar.visibility = View.GONE
-                        tvShowMore.visibility = View.GONE
+                        tryAgainBtn.visibility = View.GONE
                     }
 
                     PaginationState.ERROR -> {
                         progressBar.visibility = View.GONE
-                        tvShowMore.visibility = View.VISIBLE
+                        tryAgainBtn.visibility = View.VISIBLE
                     }
 
                     else -> throw IllegalArgumentException("unsupported state: $state")
