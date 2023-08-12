@@ -8,8 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val BASE_URL = "https://api.rawg.io/"
 
-object NetworkModule: InjectionModule {
-
+object NetworkModule : InjectionModule {
     override fun create() = module {
         single {
             val interceptor = HttpLoggingInterceptor()

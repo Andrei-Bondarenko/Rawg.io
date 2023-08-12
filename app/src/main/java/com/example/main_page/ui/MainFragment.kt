@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.mvvm.BaseFragment
 import com.example.detailed_page.DetailedFragment
 import com.example.main_page.model.games.GamesResults
@@ -25,7 +24,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     private val gamesController = GamesController(
         onGameItemClicked = { onGameItemClicked(it) },
-        onLoadGames = { genre, page, _ ->
+        onLoadGames = { genre, page ->
             viewModel.loadGames(
                 genre,
                 page
@@ -79,6 +78,5 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     override fun onDestroyView() {
         super.onDestroyView()
         binding.mainRecycler.layoutManager = null
-
     }
 }

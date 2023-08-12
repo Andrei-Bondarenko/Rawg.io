@@ -12,11 +12,11 @@ import ru.surfstudio.android.easyadapter.pagination.PaginationState
 import timber.log.Timber
 import java.util.concurrent.CancellationException
 
+private const val PAGE_SIZE = 20
+
 class MainViewModel(
     private val interactor: MainInteractor
 ) : BaseViewModel() {
-
-    private val _genresData = MutableStateFlow<List<GenresData>>(emptyList())
 
     private val _mainUi = MutableStateFlow<List<MainUi>>(emptyList())
     val mainUi = _mainUi.asStateFlow()
@@ -25,16 +25,11 @@ class MainViewModel(
         loadGenres()
     }
 
-    companion object {
-        private const val PAGE_SIZE = 20
-    }
-
     fun loadGenres() {
         launch {
             try {
                 Timber.d("CALLED FUNCTION GETDATA IN VIEWMODEL")
                 val data = interactor.getGenres()
-                _genresData.emit(data)
                 _mainUi.emit(addGenres(data))
             } catch (e: CancellationException) {
                 Timber.e("VIEWMODEL CANCELATIONEXEPTION ===========", e.message)
@@ -48,9 +43,9 @@ class MainViewModel(
     fun loadGames(genre: String, page: Int) {
         launch {
             val lastMainUi = _mainUi.value.map {
-                when(it) {
+                when (it) {
                     is MainUi.GamesList -> {
-                        if(it.genre == genre) it.copy(
+                        if (it.genre == genre) it.copy(
                             paginationState = PaginationState.READY
                         ) else it
                     }
@@ -70,19 +65,18 @@ class MainViewModel(
             } catch (t: Throwable) {
                 _mainUi.value = lastMainUi
                 _mainUi.value = _mainUi.value.map {
-                    when(it) {
+                    when (it) {
                         is MainUi.GamesList -> {
-                            if(it.genre == genre) it.copy(
+                            if (it.genre == genre) it.copy(
                                 paginationState = PaginationState.ERROR,
                                 lastVisiblePosition = it.lastVisiblePosition + PAGE_SIZE + 1
                             ) else it
                         }
+
                         is MainUi.Genre -> it
                     }
                 }
                 Timber.e("VIEWMODEL THROWABLE ========= $t")
-            }
-            finally {
             }
         }
     }
@@ -93,7 +87,7 @@ class MainViewModel(
         page: Int,
     ): List<MainUi> =
         this.map { mainUi ->
-            return@map when (mainUi) {
+            when (mainUi) {
                 is MainUi.GamesList -> {
                     if (mainUi.genre != genre) mainUi
                     else mainUi.copy(
@@ -105,7 +99,6 @@ class MainViewModel(
                         paginationState = PaginationState.READY
                     )
                 }
-
                 is MainUi.Genre -> mainUi
             }
         }
@@ -114,7 +107,6 @@ class MainViewModel(
         val mainUiList: MutableList<MainUi> = mutableListOf()
         genres.forEach {
             mainUiList.add(MainUi.Genre(it.name))
-
             mainUiList.add(
                 MainUi.GamesList(
                     genre = it.slug,

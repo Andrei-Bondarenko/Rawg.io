@@ -1,11 +1,9 @@
 package com.example.main_page.db.dao
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Upsert
 import com.example.main_page.db.model.GamesEntity
 
 @Dao

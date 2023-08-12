@@ -7,9 +7,8 @@ import coil.load
 import com.example.main_page.model.games.Screenshots
 import com.example.rawgio.R
 import com.example.rawgio.databinding.ItemDetailGameBinding
-import timber.log.Timber
 
-class ViewHolder(
+class DetailedImageViewHolder(
     private val binding: ItemDetailGameBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -27,7 +26,6 @@ class ViewHolder(
                 crossfade(true)
                 placeholder(R.drawable.ic_loading)
             }
-            Timber.d("IMAGE FROM IMAGE RECYCLER ===== ${item.image}")
         }
     }
 

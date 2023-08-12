@@ -9,7 +9,7 @@ import timber.log.Timber
 
 class MainRemoteRepository(
     private val api: MainApi
-): MainRepository {
+) : MainRepository {
     override suspend fun getGamesData(genre: String, page: Int): List<GamesResults> {
         val data = api.getGamesData(genre = genre, page = page)
         Timber.d("GAMESDATA ========= $data")
@@ -21,7 +21,4 @@ class MainRemoteRepository(
         Timber.d("DATA ========= $data")
         return DataConverter.fromNetwork(data.results)
     }
-
-
-
 }

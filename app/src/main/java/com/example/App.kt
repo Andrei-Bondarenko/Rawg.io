@@ -8,7 +8,6 @@ import org.koin.core.context.GlobalContext
 import timber.log.Timber
 
 class App : Application() {
-
     override fun onCreate() {
         super.onCreate()
         setupTimber()

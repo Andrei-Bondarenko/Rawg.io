@@ -12,7 +12,7 @@ private const val PAGE_SIZE = 20
 class MainLocalRepositoryImpl(
     private val genresDao: GenresDao,
     private val gamesDao: GamesDao,
-): MainLocalRepository {
+) : MainLocalRepository {
 
     override suspend fun getGames(page: Int, genre: String): List<GamesResults> =
         gamesDao.getGames(

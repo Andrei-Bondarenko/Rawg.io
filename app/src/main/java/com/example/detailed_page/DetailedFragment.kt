@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.common.mvvm.BaseFragment
-import com.example.detailed_page.detailed_adapter.Adapter
+import com.example.detailed_page.detailed_adapter.DetailedImageAdapter
 import com.example.main_page.model.games.GamesResults
 import com.example.main_page.model.games.Platforms
 import com.example.rawgio.R
@@ -18,10 +18,16 @@ import com.example.utils.extentions.popScreen
 import com.example.utils.extentions.withArgs
 
 class DetailedFragment : BaseFragment(R.layout.fragment_detail_games) {
+    companion object {
+        fun newInstance(itemData: GamesResults) =
+            DetailedFragment().withArgs(Arguments.DETAILS to itemData)
+    }
+
+    private val itemData: GamesResults by args(Arguments.DETAILS)
 
     private lateinit var binding: FragmentDetailGamesBinding
-    private val adapter: Adapter by lazy {
-        Adapter()
+    private val adapter: DetailedImageAdapter by lazy {
+        DetailedImageAdapter()
     }
     private val layoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -36,25 +42,20 @@ class DetailedFragment : BaseFragment(R.layout.fragment_detail_games) {
         return binding.root
     }
 
-    companion object {
-        fun newInstance(itemData: GamesResults) =
-            DetailedFragment().withArgs(Arguments.DETAILS to itemData)
-    }
-
-    private val itemData: GamesResults by args(Arguments.DETAILS)
 
     override fun initViews(view: View) {
         with(binding) {
             imageViewRecycler.layoutManager = layoutManager
             imageViewRecycler.setHasFixedSize(true)
             imageViewRecycler.adapter = adapter
-            adapter.onAttachedToRecyclerView(imageViewRecycler)
+
             releasedAtTextView.text = itemData.released
             lastUpdateTextView.text = itemData.updated.substring(0, 10)
             ratingBar.rating = itemData.rating.toFloat()
             imageView.load(itemData.background_image)
+
             gamingPlatformsTextView.text = setPlatforms(itemData.platforms)
-            setPlatforms(itemData.platforms)
+
             toolBarName.text = itemData.name
             adapter.setData(itemData.screenshots)
 
@@ -71,7 +72,7 @@ class DetailedFragment : BaseFragment(R.layout.fragment_detail_games) {
         var platformsString = ""
         for (i in platforms.indices) {
             if (i != platforms.size - 1) {
-            platformsString = platformsString + platforms[i].name + ", "
+                platformsString = platformsString + platforms[i].name + ", "
             } else platformsString += platforms[i].name
         }
         return platformsString

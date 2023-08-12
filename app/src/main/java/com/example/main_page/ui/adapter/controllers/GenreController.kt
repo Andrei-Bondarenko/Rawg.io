@@ -17,11 +17,8 @@ class GenreController : BindableItemController<MainUi.Genre, GenreController.Hol
         BindableViewHolder<MainUi.Genre>(parent, R.layout.item_genre) {
 
         private val binding: ItemGenreBinding = ItemGenreBinding.bind(itemView)
-
         override fun bind(data: MainUi.Genre) {
             binding.titleTextView.text = data.name
         }
-
     }
-
 }
